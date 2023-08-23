@@ -68,12 +68,12 @@ function Combinaciones(array){
 
 */
 
-//const fetch = require("node-fetch");
 const fetchData = async() =>{
     
     try{
         const response = await fetch("https://rickandmortyapi.com/api/character");
         const json = await response.json();
+//        console.log(json)
         return json.results;
     }catch{
         console.log("Ha ocurrido un error")
@@ -83,20 +83,35 @@ const fetchData = async() =>{
 
 async function personalizarDatos(){
     let datos = await fetchData();
-    let par = datos.filter(personaje => personaje.id %2 == 2);
+    let par = datos.filter(personaje => personaje.id % 2 == 0);
     let typed = par.map(personaje => {
         if(personaje.type == ''){
             personaje.type = "Programación Móvil";
         }
         return personaje;
     });
-    console.log("Personajes Filtrados y Modificados:")
+    console.log("Personajes Pares y con ajuste de tipo:")
     console.log(typed);
+    return typed;
 } 
 
-personalizarDatos();
+let personajeFiltrado = [];
 
+async function ajusteFinal (){
+    let personajesModif = await personalizarDatos();   
+    let listado = []; 
 
+    personajesModif.forEach(personaje => {
+        let cantidadEp = personaje.episode.length;
+        let cincoEp = cantidadEp>5 ? "Si":"No";
+        let character = "Nombre: "+personaje.name+" | Cantidad de Episodios: "+cantidadEp+" | Más de 5 Episodios: "+cincoEp;
+        listado.push(character);
+    });
+    return listado;
+}
+
+console.log("Ajuste Final")
+console.log(ajusteFinal());
 
 
 
