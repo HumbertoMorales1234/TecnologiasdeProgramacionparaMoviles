@@ -1,0 +1,91 @@
+body{
+    background-color: rgb(142, 156, 246);
+    display: flex;
+    justify-content: center;
+    font-family:  sans-serif;
+}
+.card{
+    margin: 100px;
+    background-color: azure;
+    border-radius: 20px;
+    width: 25%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+.card .compra{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(225, 237, 255);
+    width: 70%;
+    height: 50px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.containerImg > img{
+	width: 400px;
+	height: 190px;
+	object-fit: none;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.backMusica{
+    background-color: rgba(82, 97, 124, 0.52);
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon{
+    width: 30px;
+    height: 30px;
+}
+
+.detallesCompra{
+    text-align: left;
+    color: rgb(54, 54, 54);
+    font-size: 15px;
+}
+
+.textos{
+    text-align: center;
+    width: 80%;
+}
+
+.botones{
+    width: 100%;
+    text-align: center;
+}
+.btn{
+    width: 80%;
+    height: 40px;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    border: 1px;
+    font-size: 15px;
+}
+
+.linkCompra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#proceder{
+    background-color: rgb(80, 26, 218);
+    margin-bottom: 10px;
+    color: azure;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.252);
+}
+
+#cancelar{
+    background-color: azure;
+    color: rgb(179, 179, 179);
+}
