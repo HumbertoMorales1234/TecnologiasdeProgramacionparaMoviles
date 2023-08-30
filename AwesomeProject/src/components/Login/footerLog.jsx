@@ -1,4 +1,5 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { THEME } from '../../theme/colors';
 
 export default function FooterLog(){
     return(
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     enlace:{
-        color: '#0091C0',
+        color: THEME.COLORS.BLUE,
         textAlign: 'left',
         textDecorationLine: 'underline',
         paddingHorizontal: 10,

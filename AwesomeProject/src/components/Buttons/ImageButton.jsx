@@ -1,11 +1,11 @@
 import { View, TouchableOpacity, Image, Text, StyleSheet} from "react-native";
-
+import { THEME } from '../../theme/colors';
 
 export const ImageButton=({source, text})=>{
     return( 
         <TouchableOpacity>
             <View style={styles.container}>
-                <Image style={{width:30, height:30}}  source={{source}}/>
+                <Image style={{width:30, height:30}}  source={source}/>
                 <Text style={styles.texto}>{text}</Text>
             </View>
         </TouchableOpacity>
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'space-evenly',
         alignItems: 'center',
-        borderColor: '#D1D1D1',
+        borderColor: THEME.COLORS.LIGHTGREY,
         borderWidth:2,
         borderRadius: 15,
         padding: 5,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     texto:{
         fontSize: 15,
-        color: '#5F5F5F',
+        color: THEME.COLORS.MIDDLEGREY,
         padding: 5,
     }
 });

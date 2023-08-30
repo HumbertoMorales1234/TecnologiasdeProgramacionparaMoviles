@@ -3,6 +3,7 @@ import { StyledInput } from '../Inputs/Input';
 import { NextButton } from '../Buttons/Next';
 import { ImageButton } from '../Buttons/ImageButton';
 import { googleImage, facebookImage } from '../../../assets';
+import { THEME } from '../../theme/colors';
 
 export default function ContentLog() {
   return (
@@ -15,13 +16,13 @@ export default function ContentLog() {
         </TouchableOpacity>
         <NextButton text='Login'/>
         <View style={styles.separador}>
-            <Text style={{ color: '#AAAAAA', textDecorationLine: 'line-through' }}>                      </Text>
+            <Text style={{ color: THEME.COLORS.GREY, textDecorationLine: 'line-through' }}>                      </Text>
             <Text style={{ paddingHorizontal:15}}>O inicia sesión con</Text>
-            <Text style={{ color: '#AAAAAA', textDecorationLine: 'line-through' }}>                      </Text>
+            <Text style={{ color: THEME.COLORS.GREY, textDecorationLine: 'line-through' }}>                      </Text>
         </View>
         <View style={styles.separador}>
           <ImageButton source={googleImage} text='Google'/>
-          <ImageButton source={facebookImageImage} text='Facebook'/>
+          <ImageButton source={facebookImage} text='Facebook'/>
         </View>
         </View>  
     </View>
@@ -31,7 +32,7 @@ export default function ContentLog() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: THEME.COLORS.WHITE,
       alignItems: 'center',
       justifyContent: 'space-evenly',
     },
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-end',
     },
     enlace: {
-        color: '#0091C0',
+        color: THEME.COLORS.BLUE,
         margin: 10,
         textDecorationLine: 'underline',
         textAlign: 'right',
