@@ -1,10 +1,10 @@
 import { TextInput, View, StyleSheet, Text} from "react-native";
 
-export const StyledInput=({placeholder, type, label})=>{
+export const StyledInput=({placeholder, type, label, secureTextEntry})=>{
     return(
         <View>
             <Text style={styles.label} >{label}</Text>
-            <TextInput style={styles.container} placeholder={placeholder} type={type} placeholderTextColor="#9D9D9D"/>
+            <TextInput style={styles.container} placeholder={placeholder} type={type} placeholderTextColor="#9D9D9D" secureTextEntry={secureTextEntry}/>
         </View>
     );
 }

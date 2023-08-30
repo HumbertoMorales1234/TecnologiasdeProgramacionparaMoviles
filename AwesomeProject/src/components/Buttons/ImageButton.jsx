@@ -1,11 +1,11 @@
 import { View, TouchableOpacity, Image, Text, StyleSheet} from "react-native";
 
 
-export const ImageButton=({uri, text})=>{
+export const ImageButton=({source, text})=>{
     return( 
         <TouchableOpacity>
             <View style={styles.container}>
-                <Image style={{width:30, height:30}}  source={{uri}}/>
+                <Image style={{width:30, height:30}}  source={{source}}/>
                 <Text style={styles.texto}>{text}</Text>
             </View>
         </TouchableOpacity>

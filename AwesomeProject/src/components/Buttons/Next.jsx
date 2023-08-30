@@ -1,4 +1,5 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'; 
+import { THEME } from '../../theme/colors';
 
 export const NextButton=({text})=>{
     return(
@@ -12,7 +13,7 @@ export const NextButton=({text})=>{
 const styles = StyleSheet.create({
     boton:{
         justifyContent: 'center',
-        backgroundColor: '#72DCFF',
+        backgroundColor: THEME.COLORS.LIGHTBLUE,
         borderRadius: 15,
         width: 300,
         paddingVertical:10,

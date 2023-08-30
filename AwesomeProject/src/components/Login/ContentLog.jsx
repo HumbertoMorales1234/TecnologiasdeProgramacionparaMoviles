@@ -2,14 +2,15 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'; // Cualqu
 import { StyledInput } from '../Inputs/Input';
 import { NextButton } from '../Buttons/Next';
 import { ImageButton } from '../Buttons/ImageButton';
-
+import { googleImage, facebookImage } from '../../../assets';
 
 export default function ContentLog() {
   return (
     <View style={styles.container}> 
-        <StyledInput placeholder='email' type='email' label='Email'/>
-        <StyledInput placeholder='password' type='password' label='Password'/>
-        <TouchableOpacity>
+      <View style={styles.form}>
+        <StyledInput placeholder='email' type='email' label='Email' secureTextEntry={false}/>
+        <StyledInput placeholder='password' type='password' label='Password' secureTextEntry={true}/>
+        <TouchableOpacity style={styles.touchableText}>
             <Text style={styles.enlace}>¿Olvidaste la Contraseña?</Text>
         </TouchableOpacity>
         <NextButton text='Login'/>
@@ -19,12 +20,10 @@ export default function ContentLog() {
             <Text style={{ color: '#AAAAAA', textDecorationLine: 'line-through' }}>                      </Text>
         </View>
         <View style={styles.separador}>
-          <ImageButton uri="https://img.freepik.com/iconos-gratis/buscar_318-265146.jpg?w=2000" 
-          text='Google'/>
-          <ImageButton uri="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" 
-          text='Facebook'/>
+          <ImageButton source={googleImage} text='Google'/>
+          <ImageButton source={facebookImageImage} text='Facebook'/>
         </View>
-        
+        </View>  
     </View>
     
   );
@@ -36,11 +35,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'space-evenly',
     },
+    form:{
+      gap:20,
+      alignItems: 'center',
+    },
+    touchableText:{
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+    },
     enlace: {
         color: '#0091C0',
-        textAlign: 'left',
         margin: 10,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        textAlign: 'right',
     },
     separador:{
       flexDirection: 'row',     

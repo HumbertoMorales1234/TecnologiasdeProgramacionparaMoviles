@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { THEME } from '../../theme/colors';
 
 export default function HeaderLog() {
     return(
@@ -8,13 +9,15 @@ export default function HeaderLog() {
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container:{
         flex: 0.45, 
-        backgroundColor: '#21223C',
+        backgroundColor: THEME.COLORS.DARKBLUE,
         alignItems: 'left',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         width: 450,
+
     }, 
     principal:{
         fontSize: 60,
@@ -25,5 +28,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'white',
         paddingLeft: 26,
+        paddingBottom: 50,
     }
 });
