@@ -4,10 +4,10 @@ import React from "react";
 export const CustomText = ()=>{
     return(
         <View>
-            <Text>IOS</Text>
-            <Text>IOS</Text>
-            <Text>IOS</Text>
-            <Text>IOS</Text>
+            <Text>Android</Text>
+            <Text>Android</Text>
+            <Text>Android</Text>
+            <Text>Android</Text>
         </View>
     )
 }
