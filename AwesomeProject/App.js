@@ -1,12 +1,12 @@
-
-import { StyleSheet, View,} from 'react-native';
-import { WelcomeScreen } from './src/screens/WelcomeScreen';
-
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import MainScreen from './src/screens/MainScreen';
+import { THEME } from './src/theme/colors';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <WelcomeScreen/>
+      <MainScreen/>
     </View>
   );
 }
@@ -14,12 +14,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: THEME.COLORS.WHITE,
+    paddingTop: 40,
     alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'space-between',
+    //justifyContent: 'center',
   },
 });
