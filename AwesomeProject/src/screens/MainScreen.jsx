@@ -1,9 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import MainHeader from '../components/MainComponents/MainHeader';
 import { THEME } from '../theme/colors';
+import MainHeader from '../components/MainComponents/MainHeader';
 import MainContent from '../components/MainComponents/MainContent';
-import MainFooter from '../components/MainComponents/MainFooter';
 
 
 export default function MainScreen() {
@@ -11,8 +9,6 @@ export default function MainScreen() {
     <View style={styles.container}>
       <MainHeader/>
       <MainContent/>
-      <MainFooter/>
-      <StatusBar style="auto" />
     </View>
   );
 }

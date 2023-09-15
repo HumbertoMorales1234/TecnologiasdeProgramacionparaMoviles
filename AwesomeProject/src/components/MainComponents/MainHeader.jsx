@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { THEME } from '../../theme/colors';
 import { Profile } from '../../../assets';
+import { AntDesign } from '@expo/vector-icons';
+import { THEME } from '../../theme/colors';
 
 export default function MainHeader() {
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={[styles.headerText, styles.headerTextEnphasis]}>Discover</Text>
-        <Text style={styles.headerText}>your products</Text >
-      </View>
-      <Image source={Profile} style={styles.profileImage}/>
+      <Image style={{width: 60, height:60, borderRadius:50}} source={Profile}/>
+      <Text style={styles.textHeader}>Hey Alireza ✌️</Text>
+      <AntDesign name="search1" size={30} color="black" />
+      <AntDesign name="appstore-o" size={30} color="black" />
     </View>
   );
 }
@@ -18,24 +18,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     width: '100%',
   },
-  textContainer:{
-    flexDirection: 'column',
+  textHeader:{
+    fontWeight:'600',
+    fontSize:30,
   },
-  headerText:{
-    fontSize: 30,
-    color: THEME.COLORS.BLACK,
-  },
-  headerTextEnphasis:{
-    fontWeight: '900',
-    fontSize: 35,
-  },
-  profileImage:{
-    height: 80,
-    width: 70,
-    borderRadius: 50,
-    marginRight: -40,
-  }
 });
