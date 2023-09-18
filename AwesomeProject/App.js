@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Todo } from './src/components/Todo';
 import { ButtonP } from './src/components/ButtonP';
 import { TodoInput } from './src/components/TodoInput';
+import { THEME } from './src/theme/colors';
 
 
 export default function App() {
@@ -30,13 +31,13 @@ export default function App() {
   return (
     
       <View style={styles.container}>
-        <Text style={styles.tittle}>Todo List</Text>
+        <Text style={styles.tittle}>To do List</Text>
         <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
           <TodoInput 
             value={inputVal}
             onChangeText={(value) => setInputVal(value)}
             />
-          <ButtonP text={'Add Task'} light onPress={handelAddTodo} />
+          <ButtonP text={'Add Task'} light onPress={handelAddTodo} iconName={'plus-square'} color={THEME.COLORS.GREEN.POSITIVE} />
         </View>
         <FlatList 
           data={todos}
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#296355'
+    backgroundColor: THEME.COLORS.BLUE.BACKGROUND,
   },
   tittle:{
     fontSize: 40, 
