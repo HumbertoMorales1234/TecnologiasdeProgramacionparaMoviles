@@ -1,53 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, StatusBar as ReactStatus, SafeAreaView, Platform} from 'react-native';
-//* SafeAreaView: Solo funciona en IOS, la statusbar de react-native solo funciona en android
-//
-import Constants from 'expo-constants'; // npx expo install expo-constants
-//? Provee componentes compatibles con Android y IOS
-//import { BsFillBellFill } from 'react-icons'; //! Solo funciona en React
-import {Ionicons} from '@expo/vector-icons' //? iconos de expo
-import { CustomText } from './CustomTexts';
-import { WelcomeScreen } from './src/screens/WelcomeScreen';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { Todo } from './src/components/Todo';
+import { ButtonP } from './src/components/ButtonP';
+import { TodoInput } from './src/components/TodoInput';
 
-
-/* <View>
-    <CustomText/>
-</View> */
 
 export default function App() {
+
+  const [todos, setTodo] = useState([])
+  const [inputVal, setInputVal] = useState('')
+
+  const handelAddTodo = () => {
+    if (inputVal === '')return
+    setTodo([
+      ...todos, //Spread operator, mantener lo que ya había
+      {
+        id: new Date().toISOString(), 
+        name:inputVal, 
+        isCompleted: false
+      }
+    ])
+    setInputVal('')
+  }
+
+  const sumValue= ()=>{
+    setSatate(state+1) // State por si mismo no es modificable, es necesario usar una función adicional
+  }
   return (
-    <View style={styles.container}>
-      <WelcomeScreen/>
-    </View>
+    
+      <View style={styles.container}>
+        <Text style={styles.tittle}>Todo List</Text>
+        <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
+          <TodoInput 
+            value={inputVal}
+            onChangeText={(value) => setInputVal(value)}
+            />
+          <ButtonP text={'Add Task'} light onPress={handelAddTodo} />
+        </View>
+        <FlatList 
+          data={todos}
+          keyExtractor={(item) => item.id}
+          renderItem={(( {item: {name} } ) => <Todo nombre={name}/>)}
+        />
+        <StatusBar style="auto" />
+      </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
     alignItems: 'center',
-    //backgroundColor: Platform.OS === 'web' ? '#000000': '#FFFFFF',
-    // backgroundColor: Platform.select({
-    //   android:'green',
-    //   ios: 'blue',
-    //   web: 'black',
-    // }),
-    // paddingTop: Constants.statusBarHeight, // *Funciona en IOS y Android
-    // //? paddingTop: ReactStatus.currentHeight, // Este componente solo funciona en android
-    // ...Platform.select({
-    //   ios:{
-    //     backgroundColor: 'cyan',
-    //     paddingTop: 20,
-    //   },
-    //   web:{
-    //     backgroundColor: 'yellow'
-    //   }
-    // }),
+    justifyContent: 'center',
+    backgroundColor: '#296355'
   },
-  header: {
-    flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'space-between',
+  tittle:{
+    fontSize: 40, 
+    fontWeight: 'bold',
+    textAlign:'center', 
+    color:'white',
+    margin: 20,
   },
 });
