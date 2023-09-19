@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View , Alert} from 'react-native';
 import { useState } from 'react';
 import { Todo } from './src/components/Todo';
 import { ButtonP } from './src/components/ButtonP';
 import { TodoInput } from './src/components/TodoInput';
-import { THEME } from './src/theme/colors';
 
 
 export default function App() {
@@ -12,8 +11,17 @@ export default function App() {
   const [todos, setTodo] = useState([])
   const [inputVal, setInputVal] = useState('')
 
+  const handleShowError =(error)=>
+      Alert.alert('Error', error, [{text: 'Aceptar'}])
+    
+  
   const handelAddTodo = () => {
-    if (inputVal === '')return
+    if (inputVal === '')return(handleShowError('La tarea debe tener un nombre'))
+
+    const existingTodo=todos.some( todo=> todo.name.toLowerCase() === inputVal.toLowerCase())
+
+    if (existingTodo) return handleShowError('La tarea ya existe')
+
     setTodo([
       ...todos, //Spread operator, mantener lo que ya había
       {
@@ -24,10 +32,27 @@ export default function App() {
     ])
     setInputVal('')
   }
+  
+  const handleDeleteTodo = (todoId) => {
+    const filteredArray = todos.filter(todo=> todo.id !== todoId)
 
-  const sumValue= ()=>{
-    setSatate(state+1) // State por si mismo no es modificable, es necesario usar una función adicional
+    setTodo(filteredArray)
   }
+
+  const handleCompleteTodo = (todoId) => {
+    const mappedArray = todos.map( todo =>{
+      if (todo.id === todoId){
+        return {
+          ...todo, 
+          isCompleted: true
+        }
+      }
+      return todo
+    })
+    setTodo(mappedArray)
+  }
+  
+
   return (
     
       <View style={styles.container}>
@@ -37,12 +62,12 @@ export default function App() {
             value={inputVal}
             onChangeText={(value) => setInputVal(value)}
             />
-          <ButtonP text={'Add Task'} light onPress={handelAddTodo} iconName={'plus-square'} color={THEME.COLORS.GREEN.POSITIVE} />
+          <ButtonP text={'Add Task'} light onPress={handelAddTodo} />
         </View>
         <FlatList 
           data={todos}
           keyExtractor={(item) => item.id}
-          renderItem={(( {item: {name} } ) => <Todo nombre={name}/>)}
+          renderItem={(( {item: {id, name, isCompleted} } ) => <Todo nombre={name} id={id} handleDelete={handleDeleteTodo} completed={isCompleted} handleComplete={handleCompleteTodo}/>)}
         />
         <StatusBar style="auto" />
       </View>
@@ -55,9 +80,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 10,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: THEME.COLORS.BLUE.BACKGROUND,
+    backgroundColor: '#296355'
   },
   tittle:{
     fontSize: 40, 

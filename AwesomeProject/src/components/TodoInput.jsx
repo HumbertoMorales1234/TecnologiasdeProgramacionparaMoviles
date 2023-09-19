@@ -1,15 +1,11 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
-import { THEME } from "../theme/colors";
+import { StyleSheet, TouchableOpacity, Text, TextInput } from "react-native";
 
 export const TodoInput = ({value, onChangeText}) =>{
     return(
         <TextInput
             value={value}
             onChangeText={onChangeText}
-            placeholder="Add your taks"
-            placeholderTextColor={THEME.COLORS.BLUE.LABELS}
-            cursorColor={'white'}
             style={styles.container}/>
     )
 }

@@ -1,16 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ButtonP } from "./ButtonP";
-import { THEME } from "../theme/colors";
 
-export const Todo = ({nombre}) =>{
+export const Todo = ({id, nombre, handleDelete, completed, handleComplete}) =>{
     return(
-        <View style={styles.container}>
-            <Text style={styles.tittle}>{nombre}</Text>
+        <View style={[styles.container, completed&&styles.completedContainer]}>
+            <Text style={[styles.tittle, completed&&styles.completedTitle]}>{nombre}</Text>
             <View style={styles.buttonContainer}>
-                <ButtonP text={'Delete'} light  iconName={'trash-2'} color={THEME.COLORS.RED.WARNING}/>
-                <ButtonP text={'Edit'} light  iconName={'edit'}/>
-                <ButtonP text={'Subtask'} light  iconName={'corner-down-right'} />
+                <ButtonP text={'Delete'} light onPress={() => handleDelete(id)}/>
+                <ButtonP text={'Edit'} light />
+                <ButtonP text={ completed ? 'Activate' : 'Complete'} light onPress={() => handleComplete(id)}/>
             </View>
         </View>
     )
@@ -26,15 +25,22 @@ const styles =  StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: THEME.COLORS.BLUE.CARDS,
+        backgroundColor: '#2c715f',
+    },
+    completedContainer:{
+        backgroundColor: '#2c719f',
     },
     buttonContainer:{
         flexDirection: 'row',
-        gap: 10,
+        gap: 20,
     }, 
     tittle:{
         color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
     },
+    completedTitle:{
+        textDecorationLine: 'line-through',
+        color: '#b3b3b3'
+    }
 })
