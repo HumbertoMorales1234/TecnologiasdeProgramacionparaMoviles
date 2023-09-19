@@ -1,15 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ButtonP } from "./ButtonP";
+import { THEME } from "../theme/colors";
 
-export const Todo = ({id, nombre, handleDelete, completed, handleComplete}) =>{
+export const Todo = ({id, nombre, handleDelete, isComplete, handleComplete, handleUpdate, updated, isUpdating , created}) =>{
+
+    const updateText = (updated) =>{
+        if(updated !== ''){
+            return(
+                <Text style={[styles.subText, isComplete&&styles.completedFormat]}>Last Update: {updated}</Text>
+            )
+        }
+    }
+
     return(
-        <View style={[styles.container, completed&&styles.completedContainer]}>
-            <Text style={[styles.tittle, completed&&styles.completedTitle]}>{nombre}</Text>
+        <View style={[styles.container, isComplete&&styles.completedContainer]}>
+            <View>
+                <Text style={[styles.tittle, isComplete&&styles.completedFormat]}>{nombre}</Text>
+                <Text style={[styles.subText, isComplete&&styles.completedFormat]}>Created: {created}</Text>
+                {updateText(updated)}
+            </View>
             <View style={styles.buttonContainer}>
-                <ButtonP text={'Delete'} light onPress={() => handleDelete(id)}/>
-                <ButtonP text={'Edit'} light />
-                <ButtonP text={ completed ? 'Activate' : 'Complete'} light onPress={() => handleComplete(id)}/>
+                <ButtonP  light  iconName={'trash-2'} color={THEME.COLORS.RED.WARNING} onPress={() => handleDelete(id)}/>
+                <ButtonP  light  iconName={isUpdating?'slash':'edit'}  onPress={() => handleUpdate(id)} color={isUpdating&&THEME.COLORS.ORANGE.WARNING} />
+                <ButtonP light iconName={ isComplete?'rewind':'check-circle'} onPress={() => handleComplete(id)} color={isComplete&&THEME.COLORS.ORANGE.WARNING}/>
+                <ButtonP light  iconName={'corner-down-right'} />
             </View>
         </View>
     )
@@ -25,22 +40,27 @@ const styles =  StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#2c715f',
+        gap: 5,
+        backgroundColor: THEME.COLORS.BLUE.CARDS,
     },
     completedContainer:{
-        backgroundColor: '#2c719f',
+        backgroundColor: THEME.COLORS.GREEN.APPROVED,
     },
     buttonContainer:{
         flexDirection: 'row',
-        gap: 20,
+        gap: 8,
     }, 
     tittle:{
         color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
     },
-    completedTitle:{
+    subText:{
+        fontSize: 8,
+        color: '#e0e0e0',
+    },
+    completedFormat:{
         textDecorationLine: 'line-through',
-        color: '#b3b3b3'
+        color: '#c0c0c0'
     }
 })
