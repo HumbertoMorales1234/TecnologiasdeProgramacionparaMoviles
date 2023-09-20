@@ -23,7 +23,7 @@ export const Todo = ({id, nombre, handleDelete, isComplete, handleComplete, hand
             <View style={styles.buttonContainer}>
                 <ButtonP  light  iconName={'trash-2'} color={THEME.COLORS.RED.WARNING} onPress={() => handleDelete(id)}/>
                 <ButtonP  light  iconName={isUpdating?'slash':'edit'}  onPress={() => handleUpdate(id)} color={isUpdating&&THEME.COLORS.ORANGE.WARNING} />
-                <ButtonP light iconName={ isComplete?'rewind':'check-circle'} onPress={() => handleComplete(id)} color={isComplete&&THEME.COLORS.ORANGE.WARNING}/>
+                <ButtonP light iconName={ isComplete?'rewind':'check-circle'} onPress={() => handleComplete(id)} color={isComplete?THEME.COLORS.ORANGE.WARNING : THEME.COLORS.BLUE.COMPLETE}/>
                 <ButtonP light  iconName={'corner-down-right'} />
             </View>
         </View>
@@ -34,7 +34,7 @@ const styles =  StyleSheet.create({
     container:{
         borderRadius: 20,
         marginTop: 30,
-        width: 400,
+        width: '92%',
         paddingHorizontal: 15,
         paddingVertical: 20,
         flexDirection: 'row',

@@ -12,6 +12,7 @@ export const THEME = {
             BACKGROUND: '#296395',
             CARDS: '#2c718f',
             LABELS: '#3C9EC7',
+            COMPLETE: '#3FE5FF',
         },
         ORANGE:{
             WARNING: '#FFBD5D',
