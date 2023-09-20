@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, TextInput, View , Alert} from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View , Alert, Modal} from 'react-native';
 import { useState } from 'react';
 import { Todo } from './src/components/Todo';
 import { ButtonP } from './src/components/ButtonP';
@@ -18,7 +18,9 @@ export default function App() {
     handelAddTodo,
     handleCompleteTodo,
     handleUpdateButton,
-    handleDeleteTodo,} = useTodos()
+    handleDeleteTodo,
+  } = useTodos()
+
 
   return (
     

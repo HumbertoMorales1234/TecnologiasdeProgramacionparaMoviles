@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 9,
         paddingVertical: 7,
-        borderColor: 'white'
+        borderColor: 'white',
     },
     whiteButtonText:{
         color: 'white',

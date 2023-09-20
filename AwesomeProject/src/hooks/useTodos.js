@@ -18,6 +18,8 @@ export const useTodos= () =>{
     
   //Agregar una tarea
   const handelAddTodo = () => {
+    if(inputVal.length >= 11)return(handleShowError('El nombre de la tarea es muy largo'))
+
     if (inputVal === '')return(handleShowError('La tarea debe tener un nombre'))
 
     if(canAdd){
