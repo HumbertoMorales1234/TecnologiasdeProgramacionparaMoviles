@@ -1,50 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, StyleSheet, Text, TextInput, View , Alert, Modal} from 'react-native';
-import { useState } from 'react';
-import { Todo } from './src/components/Todo';
-import { ButtonP } from './src/components/ButtonP';
-import { TodoInput } from './src/components/TodoInput';
+import { CharactersScreen } from './src/screens/CharactersScreen';
 import { THEME } from './src/theme/colors';
-import { useTodos } from './src/hooks/useTodos';
 
 
 export default function App() {
 
-  const {
-    inputVal,
-    canAdd,
-    setInputVal,
-    todos, 
-    handelAddTodo,
-    handleCompleteTodo,
-    handleUpdateButton,
-    handleDeleteTodo,
-  } = useTodos()
-
-
   return (
     
       <View style={styles.container}>
-        <Text style={styles.tittle}>To do List</Text>
-        <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
-          <TodoInput 
-            value={inputVal}
-            onChangeText={(value) => setInputVal(value)}
-            />
-          <ButtonP text={canAdd?'Add Task ': 'Edit Task '} light 
-              onPress={handelAddTodo} 
-              color={canAdd?THEME.COLORS.GREEN.POSITIVE:THEME.COLORS.ORANGE.WARNING} 
-              iconName={canAdd?'plus-circle':'edit'}/>
-        </View>
-        <FlatList 
-          data={todos}
-          keyExtractor={(item) => item.id}
-          renderItem={(( {item: {id, name, isCompleted, isUpdating, updated, created} } ) => 
-          <Todo nombre={name} id={id} updated={updated} created={created}
-          handleDelete={handleDeleteTodo} handleComplete={handleCompleteTodo} handleUpdate={handleUpdateButton}
-          isComplete={isCompleted} isUpdating={isUpdating}
-          />)}
-        />
+        <CharactersScreen/> 
         <StatusBar style="auto" />
       </View>
     
@@ -57,8 +22,8 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 10,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: THEME.COLORS.BLUE.BACKGROUND,
+    //justifyContent: 'center',
+    backgroundColor: THEME.COLORS.BLUE.CARDS,
   },
   tittle:{
     fontSize: 40, 
