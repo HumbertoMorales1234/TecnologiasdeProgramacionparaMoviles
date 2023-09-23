@@ -17,5 +17,10 @@ export const THEME = {
         ORANGE:{
             WARNING: '#FFBD5D',
         },
+        GREY: {
+            BACKGROUND: '#272b33',
+            CARDS: '#3c3e44',
+            noSTATUS: '#9e9e9e',
+        },
     }
 }
