@@ -1,28 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View} from 'react-native';
+import { CharactersScreen } from './src/screens/CharactersScreen';
+import { THEME } from './src/theme/colors';
+
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Router } from './src/routes/router';
-import { HomeScreen } from './src/screens/HomeScreen';
-import { LoginScreen } from './src/screens/LoginScreen';
+import { CharInfoScreen } from './src/screens/CharInfoScreen';
 
-
-//npm install @react-navigation/native
-//npx expo install react-native-screens react-native-safe-area-context
-//npm install @react-navigation/stack
-//npx expo install react-native-gesture-handler
-
-const Stack = createStackNavigator()
+const StackNav = createStackNavigator()
 
 export default function App() {
 
   return (
       <NavigationContainer>
         <View style={styles.container}>
-          <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen name='Home' component={HomeScreen}/>
-            <Stack.Screen name='Login' component={LoginScreen}/>
-          </Stack.Navigator>
+          <StackNav.Navigator initialRouteName='Characters' 
+            screenOptions={{headerTitleStyle:{ 
+              fontWeight: '600', fontSize: 20
+              },
+              headerStyle:{
+                backgroundColor: THEME.COLORS.GREY.BACKGROUND,
+              }, 
+              headerTintColor: 'white'
+            }} >
+            <StackNav.Screen name='Characters' component={CharactersScreen}/>
+            <StackNav.Screen name='Character Info.' component={CharInfoScreen}/>
+          </StackNav.Navigator> 
           <StatusBar style="auto" />
         </View>
       </NavigationContainer>
@@ -34,6 +37,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    backgroundColor: THEME.COLORS.GREY.BACKGROUND,
+  },
+  headerTitleStyle:{
+    fontWeight: '900',
+    fontFamily: 40,
   },
 });
