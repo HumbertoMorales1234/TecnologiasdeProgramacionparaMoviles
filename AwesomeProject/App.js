@@ -1,31 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View} from 'react-native';
-import { CharactersScreen } from './src/screens/CharactersScreen';
-import { THEME } from './src/theme/colors';
-
+import { StyleSheet, View, Text} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { CharInfoScreen } from './src/screens/CharInfoScreen';
+import { Router } from './src/routes/router';
+import { HomeScreen } from './src/screens/HomeScreen';
+import { LoginScreen } from './src/screens/LoginScreen';
 
-const StackNav = createStackNavigator()
+
+//npm install @react-navigation/native
+//npx expo install react-native-screens react-native-safe-area-context
+//npm install @react-navigation/stack
+//npx expo install react-native-gesture-handler
+
+const Stack = createStackNavigator()
 
 export default function App() {
 
   return (
       <NavigationContainer>
         <View style={styles.container}>
-          <StackNav.Navigator initialRouteName='Characters' 
-            screenOptions={{headerTitleStyle:{ 
-              fontWeight: '600', fontSize: 20
+          <Stack.Navigator initialRouteName='Home' screenOptions={{
+              headerTintColor: '#5a5ef9',
+              headerTitleStyle: {
+                fontSize: 40,
+                fontWeight: '700'
               },
-              headerStyle:{
-                backgroundColor: THEME.COLORS.GREY.BACKGROUND,
-              }, 
-              headerTintColor: 'white'
-            }} >
-            <StackNav.Screen name='Characters' component={CharactersScreen}/>
-            <StackNav.Screen name='Character Info.' component={CharInfoScreen}/>
-          </StackNav.Navigator> 
+              headerShown: false,
+              //headerLeft: () => <Text>Wenas</Text>
+            }}>
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='Login' component={LoginScreen}/>
+          </Stack.Navigator>
           <StatusBar style="auto" />
         </View>
       </NavigationContainer>
@@ -37,11 +42,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    paddingHorizontal: 10,
-    backgroundColor: THEME.COLORS.GREY.BACKGROUND,
-  },
-  headerTitleStyle:{
-    fontWeight: '900',
-    fontFamily: 40,
+    backgroundColor: '#fff',
   },
 });
