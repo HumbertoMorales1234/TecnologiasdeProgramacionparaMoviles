@@ -25,7 +25,7 @@ export default function App() {
                 fontSize: 40,
                 fontWeight: '700'
               },
-              headerShown: false,
+              //headerShown: false,
               //headerLeft: () => <Text>Wenas</Text>
             }}>
             <Stack.Screen name='Home' component={HomeScreen} />
