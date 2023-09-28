@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { Router } from './src/routes/router';
-import { HomeScreen } from './src/screens/HomeScreen';
-import { LoginScreen } from './src/screens/LoginScreen';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { WelcomeScreen } from './src/screens/WelcomeScreen';
+import { TicketScreen } from './src/screens/TicketScreen';
 
 //npm install @react-navigation/native
 //npx expo install react-native-screens react-native-safe-area-context
@@ -15,25 +14,14 @@ import { LoginScreen } from './src/screens/LoginScreen';
 const Stack = createStackNavigator()
 
 export default function App() {
-
   return (
-      <NavigationContainer>
-        <View style={styles.container}>
-          <Stack.Navigator initialRouteName='Home' screenOptions={{
-              headerTintColor: '#5a5ef9',
-              headerTitleStyle: {
-                fontSize: 40,
-                fontWeight: '700'
-              },
-              headerShown: false,
-              //headerLeft: () => <Text>Wenas</Text>
-            }}>
-            <Stack.Screen name='Home' component={HomeScreen} />
-            <Stack.Screen name='Login' component={LoginScreen}/>
-          </Stack.Navigator>
-          <StatusBar style="auto" />
-        </View>
-      </NavigationContainer>
+    
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
+          <Stack.Screen name='Welcome' component={WelcomeScreen}/>
+          <Stack.Screen name='Ticket' component={TicketScreen}/>
+        </Stack.Navigator>
+    </NavigationContainer>
     
   );
 }
@@ -41,7 +29,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
