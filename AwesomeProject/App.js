@@ -7,10 +7,10 @@ import { HomeScreen } from './src/screens/HomeScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 
 
-//npm install @react-navigation/native
-//npx expo install react-native-screens react-native-safe-area-context
-//npm install @react-navigation/stack
-//npx expo install react-native-gesture-handler
+// npm install @react-navigation/native
+// npx expo install react-native-screens react-native-safe-area-context
+// npm install @react-navigation/stack
+// npx expo install react-native-gesture-handler
 
 const Stack = createStackNavigator()
 
@@ -22,7 +22,7 @@ export default function App() {
           <Stack.Navigator initialRouteName='Home' screenOptions={{
               headerTintColor: '#5a5ef9',
               headerTitleStyle: {
-                fontSize: 40,
+                fontSize: 20,
                 fontWeight: '700'
               },
               //headerShown: false,
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
 });

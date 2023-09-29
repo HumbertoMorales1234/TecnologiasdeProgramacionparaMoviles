@@ -1,83 +1,76 @@
 import React, { useState, useEffect} from "react";
-import { Button, Modal, Text, View, StyleSheet, Switch, ActivityIndicator } from "react-native";
+import { Button, Modal, Text, View, StyleSheet, Switch, ActivityIndicator, TextInput } from "react-native";
 import { Header } from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 //import { useState } from "react";
 
-export const HomeScreen = ({navigation}) =>{
+export const HomeScreen = ({}) =>{
 
-    const [isVisible, setIsVisible] = useState(false)
+    const navigation = useNavigation()
+    const [inputValue, setInputValue] = useState('')
+    const [characters, setCharacters] = useState([])
+    const [filteredCharacters, setFilteredCharacters] = useState([])
 
-    const [isEnabled, setIsEnabled] = useState(false)
+    // useEffect ( ()=> {
+    //     navigation.setOptions({
+    //         title: 'Home from Component', 
+    //         headerSearchBarOptions: {
+    //             placeHolder: 'hello',
+    //         }
+    //     })
+    // },  [navigation])
 
-    const [isFetching, setIsFetching] = useState(false)
-
-    useEffect(() => {
-        const fetchData = async () =>{
+    useEffect( () => {
+        const fetchData = async () => {
             try {
-                setIsFetching(true)
                 const res = await fetch('https://rickandmortyapi.com/api/character')
-                const data = await res.json()
-                await delay(5000)
+                const data =  await res.json()
+                setCharacters(data.results)
+                setFilteredCharacters(data.results)
             } catch (error) {
-                
-            }finally{
-                setIsFetching(false)
+                console.log(error)
             }
         }
-    }, [])
 
-    const toggleSwitch = () => setIsEnabled(
-        previousState => !previousState
-    );
+    fetchData()
+    },[])
+
+    const filterData = (value) => {
+        if (value){
+            const filteredData = characters.filter(characters => characters.name.includes(value))
+            setFilteredCharacters(filteredData)
+        }else{
+            setFilteredCharacters(characters)
+        }
+    }
 
     return(
-        <View style={{alignItems: 'center', justifyContent:'space-evenly', flex:1}}>
-            <Modal
-                animationType="slide"
-                visible={isVisible}
-                transparent
-                onRequestClose={() => setIsVisible(false)}
-            >
-                <View style = {styles.modal}>
-                    <Text> Modal </Text>
-                    <Button title="Close Modal" onPress={() => setIsVisible(false)}/>
-                </View>
-            </Modal>
-
-            <Text>Home</Text>
-            <Button title="Show Modal" onPress={() => setIsVisible(true)}/>
-
-            <Switch
-                trackColor={{false: 'purple', true: 'yellow'}}
-                thumbColor={isEnabled? '#00ff00':'#0000ff'}
-                onValueChange={toggleSwitch}
-                value= {isEnabled}
-                style = {{transform: [{scaleX: 5}, {scaleY: 5}]}}
+        <View style={[styles.modal]}>
+            <TextInput 
+                value={inputValue}
+                onChangeText={(e) => {setInputValue(e), filterData(e)}}
+                style = {{borderWidth: 1, borderColor: 'white', color:'white', paddingVertical:10 }}
             />
-            { isEnabled ? (
-                <Text>Texto sorpresa</Text>
-            ): null}
-
-            <ActivityIndicator size='large' color='#00ffff'/>
-            
-            {isFetching ?(
-                <View>
-                    <Text>Cargando</Text>
-                    <ActivityIndicator size='large' color='#00ffff'/>
-                </View>
-            ):null}
+            {filteredCharacters.map((character) =>{
+                return(
+                    <View key={character.id}>
+                        <Text style={styles.text}>Name: {character.name}</Text>
+                    </View>
+                )
+            })}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     modal:{
-        width: 200,
-        height: 200,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white'
+        flex: 1,
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        backgroundColor: '#000'
+    }, 
+    text:{
+        color: 'white'
     }
 })
