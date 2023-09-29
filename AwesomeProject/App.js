@@ -1,47 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { Router } from './src/routes/router';
-import { HomeScreen } from './src/screens/HomeScreen';
-import { LoginScreen } from './src/screens/LoginScreen';
-
-
-// npm install @react-navigation/native
-// npx expo install react-native-screens react-native-safe-area-context
-// npm install @react-navigation/stack
-// npx expo install react-native-gesture-handler
-
-const Stack = createStackNavigator()
+import { StyleSheet, Text, View } from 'react-native';
+import { MainScreen } from './src/screens/Main';
 
 export default function App() {
-
   return (
-      <NavigationContainer>
-        <View style={styles.container}>
-          <Stack.Navigator initialRouteName='Home' screenOptions={{
-              headerTintColor: '#5a5ef9',
-              headerTitleStyle: {
-                fontSize: 20,
-                fontWeight: '700'
-              },
-              //headerShown: false,
-              //headerLeft: () => <Text>Wenas</Text>
-            }}>
-            <Stack.Screen name='Home' component={HomeScreen} />
-            <Stack.Screen name='Login' component={LoginScreen}/>
-          </Stack.Navigator>
-          <StatusBar style="auto" />
-        </View>
-      </NavigationContainer>
-    
+    <View style={styles.container}>
+      <MainScreen/>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -1,2 +1,2 @@
-export {default as googleImage} from './Google.png'
-export {default as facebookImage} from './Facebook.png'
+export {default as Amiibo} from './amiibo_logo.png'
+export {default as Smash} from './smash_logo.png'
