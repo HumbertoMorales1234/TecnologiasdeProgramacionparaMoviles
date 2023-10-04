@@ -1,13 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { MainScreen } from './src/screens/Main';
+import { Card } from './src/components/card';
+import { AppContextProvider } from './src/context/AppContext';
 
 export default function App() {
+
+
   return (
-    <View style={styles.container}>
-      <MainScreen/>
-      <StatusBar style="auto" />
-    </View>
+    <AppContextProvider>
+      <View style={styles.container}>
+        <Card/>
+        <StatusBar style="auto" />
+      </View>
+    </AppContextProvider>
   );
 }
 
