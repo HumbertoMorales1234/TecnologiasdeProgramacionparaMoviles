@@ -1,56 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import StyledFlatlist from './src/components/StyledFlatlist'
+// npm install @react-navigation/native
+// npx expo install react-native-screens react-native-safe-area-context
+// npm install @react-navigation/material-top-tabs react-native-tab-view
+// npx expo install react-native-pager-view
 
-const DATA=[
-  {id: 0, name: 'Joe', lastname: 'Deckard'},
-  {id: 1, name: 'Beto', lastname: 'Morales'},
-  {id: 2, name: 'Gustavo', lastname: 'Avila'},
-  {id: 3, name: 'Maryjose', lastname: 'Contreras'},
-  {id: 4, name: 'Ismael', lastname: 'Diaz'},
-  {id: 5, name: 'Pau', lastname: 'Crespo'},
-  {id: 6, name: 'Teresa', lastname: 'Rivera'},
-  {id: 7, name: 'Marco', lastname: 'Solis'},
-  {id: 8, name: 'Sebastian', lastname: 'Castro'},
-  {id: 9, name: 'Luis', lastname: 'Reynaldo'},
-  {id: 10, name: 'Kratos', lastname: 'Nose'},
-  {id: 11, name: 'José', lastname: 'Madero'},
-  {id: 12, name: 'Miguel', lastname: 'Hidalgo'},
-]
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { SendScreen } from './src/screens/SendScreen';
+import { AppContextProvider } from './src/context/AppContext';
+import { BalanceScreen } from './src/screens/BalanceScreen';
+import { MyCardsScreen } from './src/screens/MyCardsScreen';
 
-//Flatlist permite renderizar varios elementos a manera de scroll
+const Tab = createMaterialTopTabNavigator()
+
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      {/*<Login/> */}
-      <FlatList data={DATA} style={styles.lista} 
-      renderItem={({item: {name, lastname}, index})=>
-        <StyledFlatlist name={name} lastname={lastname} index={index}/>
-      }
-      ItemSeparatorComponent={<View style={styles.separador}></View>}
-      keyExtractor={({id}) => id}
-      />
-      <StatusBar style='auto'/>
-    </View>
+    <AppContextProvider>
+      <NavigationContainer>
+        <Tab.Navigator tabBar={() => null} initialRouteName='MyCards' backBehavior='initialRoute'>
+          <Tab.Screen name='MyCards' component={MyCardsScreen}/>
+          <Tab.Screen name='Balance' component={BalanceScreen}/>
+          <Tab.Screen name='Send' component={SendScreen}/>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AppContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop:50,
-    paddingHorizontal:8
-  },
-  lista: {
-    borderWidth:1,
-    borderColor: '#808080',
-    borderRadius: 20,
-    margin: 5,
-    padding: 1,
-
-  },
-  separador:{
-    borderWidth:1, 
-    borderColor: '#808080',
-    marginHorizontal: 3,
-  },
-});
