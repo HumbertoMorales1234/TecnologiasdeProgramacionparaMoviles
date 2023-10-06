@@ -1,21 +1,46 @@
-import React from "react";
-import { Button, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Header } from "../components/Header";
+import React, { useState } from 'react'
+import { Alert, StyleSheet } from 'react-native'
+import { Text, TextInput, TouchableOpacity } from 'react-native'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useNavigation } from '@react-navigation/native'
 
-export const LoginScreen = ({navigation, route}) =>{
 
-    const {name}  = route.params
+const navigation = useNavigation()
 
-    const {canGoBack, goBack} = useNavigation()
+export const LoginScreen = () => {
+    const {handleLogin: onLogin} = useAuthContext()
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-    console.log(navigation)
+    Alert.alert('Error', 'Credenciales invalidas', [{
+        
+    }])
 
-    return(
-        <View>
-            <Header/>
-            <Text>Login {name}</Text>
-            <Button title="Go Back" disabled={!canGoBack} onPress={() => goBack()}/>
-        </View>
-    )
+    const handleLogin =({navigation}) =>{
+        try {
+            const loginValue =  onLogin(username, password)
+            if(loginValue){
+                return navigation.navigate('Home')
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+  return (
+    <View>
+        <Text>Iniciar Sesión</Text>
+        <TextInput value={username} onChange={(value)=>setUsername()} placeholder='Ingresa tu usuario'/>
+        <TextInput value={password} onChange={(value)=>setPassword()} placeholder='Ingresa tu contraseña' secureTextEntry/>
+        <TouchableOpacity style={{borderWidth: 1, backgroundColor:'green', paddingVertical: 20}} onPress={handleLogin}>
+            <Text style={{textAlign: 'center', color:'white'}}>Iniciar Sesión</Text>
+        </TouchableOpacity>
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({
+    inputHolder:{
+        borderWidth:1,
+    }
+})
