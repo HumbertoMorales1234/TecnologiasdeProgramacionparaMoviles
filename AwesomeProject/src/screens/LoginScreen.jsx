@@ -1,46 +1,76 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet } from 'react-native'
-import { Text, TextInput, TouchableOpacity } from 'react-native'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useNavigation } from '@react-navigation/native'
-
-
-const navigation = useNavigation()
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native'
+import { useAppContext } from '../hooks/useAppContext'
+import { THEME } from '../theme/Colors'
+import { ContinueButton } from '../components/Buttons/ContinueButton'
+import { Food } from '../../assets'
+import { LinkButton } from '../components/Buttons/LinkButton'
+import { RegisterInput } from '../components/Inputs/RegisterInput'
 
 export const LoginScreen = () => {
-    const {handleLogin: onLogin} = useAuthContext()
+    const [,,handleLogIn] = useAppContext()
+    const navigation = useNavigation()
+    
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
+    const [messageActive, setMessageActive] = useState(false)
+    
 
-    Alert.alert('Error', 'Credenciales invalidas', [{
-        
-    }])
+    const handleLogInPress = ()=>{
+        setMessageActive(false)
+        if(username === '' || password === ''){
+            setMessage('You are missing some data')
+            setMessageActive(true)
+            return
+        }
 
-    const handleLogin =({navigation}) =>{
-        try {
-            const loginValue =  onLogin(username, password)
-            if(loginValue){
-                return navigation.navigate('Home')
-            }
-        } catch (error) {
-            console.error(error)
+        const loginValue = handleLogIn(username, password)
+        if(!loginValue){
+            setMessage('Not valid credentials')
+            setMessageActive(true)
         }
     }
 
+    const handleMessageShow = () => {
+        if(messageActive) return(<Text style={{color: THEME.COLORS.ALERT, textAlign: 'center', width: 370}}>{message}</Text>)
+    }
+
   return (
-    <View>
-        <Text>Iniciar Sesión</Text>
-        <TextInput value={username} onChange={(value)=>setUsername()} placeholder='Ingresa tu usuario'/>
-        <TextInput value={password} onChange={(value)=>setPassword()} placeholder='Ingresa tu contraseña' secureTextEntry/>
-        <TouchableOpacity style={{borderWidth: 1, backgroundColor:'green', paddingVertical: 20}} onPress={handleLogin}>
-            <Text style={{textAlign: 'center', color:'white'}}>Iniciar Sesión</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+        <Image source={Food} style={styles.image}/>
+        <Text style={{textAlign: 'left', width: 300, fontSize: 40}}>Wecome!</Text>
+        <View style={{gap: 10}}>
+            <RegisterInput value={username} onTextChange={(value) => setUsername(value)} placeholder='Insert your username' label='Username: '/>
+            <View style={{alignItems: 'flex-end'}}>
+                <RegisterInput value={password} onTextChange={(value) => setPassword(value)} placeholder='Insert your password' label='Password: ' isSecure/>
+                <LinkButton text='Forgot your password?'/>
+            </View>
+            {handleMessageShow()}
+        </View>
+        <View style={{alignItems: 'center', gap: 15}}>
+            <ContinueButton text='Log in' onPress={() => handleLogInPress()}/>
+            <View style={{flexDirection: 'row', gap: 5}}>
+                <Text>Don't have an account?</Text>
+                <LinkButton text='Sign Up' onPress={() => navigation.navigate('Register')}/>
+            </View>
+        </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    inputHolder:{
-        borderWidth:1,
+    container: {
+        flex: 1, 
+        alignItems: 'center',
+        gap: 40,
+        backgroundColor: THEME.COLORS.BACKGROUND,
+    },
+    image:{
+        height: 300,
+        width: 600,
+        borderBottomLeftRadius: 225,
+        borderBottomRightRadius: 225,
     }
 })

@@ -1,2 +1,3 @@
-export {default as googleImage} from './Google.png'
-export {default as facebookImage} from './Facebook.png'
+export {default as Avocado} from './AvocadoSalad.jpg'
+export {default as Food} from './food.jpg'
+export {default as Burger} from './burger.jpg'

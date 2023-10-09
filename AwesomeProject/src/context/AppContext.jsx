@@ -1,37 +1,34 @@
 import { createContext, useState } from "react";
 
-  const person = {
-    Id: 1,
-    name: 'Beto',
-    lastname: 'Morales',
-    age: '23',
-    country: 'Mexico',
-    city: 'Morelia',
-    school: 'ITM',
-    isActive: false
-  }
 
-export const AppContext = createContext(person)
+export const AppContext = createContext()
 
-export const AppContextProvider = ({children}) => {
+export const AppContextProvider= ({children}) =>{
+    const [isAuthenticated, setAuthenticated] = useState(false)
+    const [user, setUser] = useState('')
 
-    const [Persona, setPersona] = useState(person)
-
-    const handleIsActive = () =>{
-        setPersona({
-            ...Persona,
-            isActive: !Persona.isActive
-        })   
+    const handleLogIn = (username, password) =>{
+        if(username==='Beto' && password==='1234'){
+            setUser(username)
+            setAuthenticated(true)
+        }
     }
 
-    const values ={
-        Persona,
-        handleIsActive
+    const handleLogOut = () =>{
+        setUser('')
+        setAuthenticated(false)
     }
 
-  return (
-    <AppContext.Provider value={values}>
-        {children}
-    </AppContext.Provider>
-  )
+    const values =[
+        isAuthenticated,
+        user,
+        handleLogIn,
+        handleLogOut,
+    ]
+
+    return(
+        <AppContext.Provider value={values}>
+            {children}
+        </AppContext.Provider>
+    )
 }
