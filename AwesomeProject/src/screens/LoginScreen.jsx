@@ -18,7 +18,7 @@ export const LoginScreen = () => {
     const [messageActive, setMessageActive] = useState(false)
     
 
-    const handleLogInPress = ()=>{
+    const handleLogInPress = async()=>{
         setMessageActive(false)
         if(username === '' || password === ''){
             setMessage('You are missing some data')
@@ -26,7 +26,7 @@ export const LoginScreen = () => {
             return
         }
 
-        const loginValue = handleLogIn(username, password)
+        const loginValue = await handleLogIn(username, password)
         if(!loginValue){
             setMessage('Not valid credentials')
             setMessageActive(true)
