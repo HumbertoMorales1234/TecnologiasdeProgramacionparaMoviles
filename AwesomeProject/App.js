@@ -1,25 +1,142 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import ResumenScreen from './src/screens/ResumenScreen';
-import BaseScreen from './src/screens/BaseScreen';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NumberButton } from './src/components/Number';
+import { useReducer, useState } from 'react';
 
+const CALCULATOR_TYPES = {
+  SELECT_NUMBER: 'SELECT_NUMBER',
+  SELECT_OPERATOR: 'SELECT_OPERATOR',
+  CALCULATE: 'CALCULATE',
+  SELECT_FUNCTION: 'SELECT_FUNCTION',
+}
 
-const Tab = createMaterialTopTabNavigator()
+const initialState={
+  displayNumber: 0,
+  operator: '',
+  previousNumber: 0,
+  currentNumber: 0,
+}
 
-//npx expo install expo-file-system
-//npx expo install expo-media-library
-//npx expo install expo-image-picker
+function reducer(state, action){
+  switch(action.type){
+    case CALCULATOR_TYPES.SELECT_NUMBER: 
+    let acumulado= state.currentNumber*10+action.payload
+    return{
+      ...state,
+      displayNumber: acumulado,
+      currentNumber: acumulado
+    }
+    case CALCULATOR_TYPES.SELECT_OPERATOR: 
+      return{
+        ...state, 
+        operator:action.payload, 
+        previousNumber: state.currentNumber,
+        currentNumber: 0
+      }
+    case CALCULATOR_TYPES.CALCULATE: 
+      let result = 0
+      switch (state.operator){
+        case '*':
+          result = state.previousNumber * state.currentNumber
+          break;
+        case '-':
+          result = state.previousNumber - state.currentNumber
+          break;
+        case '+':
+          result = state.previousNumber + state.currentNumber
+          break;
+        case '/':
+          result = state.previousNumber / state.currentNumber
+          break;
+        default: return state
+      }
+      return{
+        ...state, 
+        previousNumber: 0,
+        displayNumber: result,
+        currentNumber: result,
+      }
+    case CALCULATOR_TYPES.SELECT_FUNCTION:
+      switch (action.payload){
+        case 'C':return{
+          ...state, displayNumber: 0, currentNumber:0, operator:'', previousNumber:0
+        }
+        case '<-': 
+          const errased = (state.currentNumber-state.currentNumber%10)/10
+        return{
+          ...state, currentNumber: errased, displayNumber: errased,
+        }
+        case '%':
+          const percent = state.currentNumber/100
+          return{
+            ...state, currentNumber: percent, displayNumber: percent,
+          }
+      }
+  }
+}
 
 export default function App() {
+
+  const [history, setHistory] = useState('')
+
+  const  [state, dispach] = useReducer(reducer, initialState);
+  const handleSelectNumber= (number) => {
+    dispach({type: CALCULATOR_TYPES.SELECT_NUMBER, payload: number})
+  }
+  const handleSelectOperator = (operator) => {
+    if(state.operator){
+      handleCalculate()
+    }
+    dispach({type: CALCULATOR_TYPES.SELECT_OPERATOR, payload: operator})
+    
+    setHistory(state.currentNumber+operator)
+  }
+  
+  const handleCalculate = () =>{
+    setHistory(state.previousNumber+state.operator+state.currentNumber)
+    dispach({type: CALCULATOR_TYPES.CALCULATE})
+  }
+
+  const handleFunction = (task) =>{
+    dispach({type: CALCULATOR_TYPES.SELECT_FUNCTION, payload: task})
+    if(task=== 'C'){
+      setHistory('')
+    }
+  }
+
   return (
-    <NavigationContainer>
-    <Tab.Navigator screenOptions={{tabBarStyle:{paddingTop: 40}}}>
-      <Tab.Screen name='Base' component={BaseScreen}/>
-      <Tab.Screen name='Resume' component={ResumenScreen}/>
-    </Tab.Navigator>
-  </NavigationContainer>
+    <View style={styles.container}>
+      <Text>{history}</Text>
+      <Text style={styles.text}>{state.displayNumber}</Text>
+      <View style={styles.row}>
+      <NumberButton text='C' role='function' onPress={() => handleFunction('C')}/>
+      <NumberButton text='%' role='function' onPress={() => handleFunction('%')}/>
+      <NumberButton text='<-' role='function' onPress={() => handleFunction('<-')}/>
+      <NumberButton text='/' role='operator' onPress={() => handleSelectOperator('/')}/>
+      </View>
+      <View style={styles.row}>
+        <NumberButton text='7' role='number' onPress={() => handleSelectNumber(7)}/>
+        <NumberButton text='8' role='number' onPress={() => handleSelectNumber(8)}/>
+        <NumberButton text='9' role='number' onPress={() => handleSelectNumber(9)}/>
+        <NumberButton text='x' role='operator' onPress={() => handleSelectOperator('*')}/>
+      </View>
+      <View style={styles.row}>
+        <NumberButton text='4' role='number' onPress={() => handleSelectNumber(4)}/>
+        <NumberButton text='5' role='number' onPress={() => handleSelectNumber(5)}/>
+        <NumberButton text='6' role='number' onPress={() => handleSelectNumber(6)}/>
+        <NumberButton text='-' role='operator' onPress={() => handleSelectOperator('-')}/>
+      </View>
+      <View style={styles.row}>
+        <NumberButton text='1' role='number' onPress={() => handleSelectNumber(1)}/>
+        <NumberButton text='2' role='number' onPress={() => handleSelectNumber(2)}/>
+        <NumberButton text='3' role='number' onPress={() => handleSelectNumber(3)}/>
+        <NumberButton text='+' role='operator' onPress={() => handleSelectOperator('+')}/>
+      </View>
+      <View style={styles.row}>
+      <NumberButton text='0' role='number' onPress={() => handleSelectNumber(0)}/>
+        <NumberButton text='=' role='operator' onPress={() => handleCalculate()}/>
+      </View>
+    </View>
   );
 }
 
@@ -29,5 +146,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 20,
   },
+  text:{
+    fontSize: 25,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    borderRadius: 20,
+    borderColor: 'black',
+    paddingVertical: 10,
+    borderWidth: 5,
+    width: 300,
+    paddingHorizontal: 20,
+  },
+  row:{
+    flexDirection: 'row',
+    gap: 10,
+  }
 });
