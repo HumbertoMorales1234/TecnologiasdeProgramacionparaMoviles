@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     numberContainer:{
-        backgroundColor: 'blue',
+        backgroundColor: '#ffa033',
     },
     operatorContainer:{
         backgroundColor: '#fb0475'
