@@ -1,70 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, TextInput, View , Alert, Modal} from 'react-native';
-import { useState } from 'react';
-import { Todo } from './src/components/Todo';
-import { ButtonP } from './src/components/ButtonP';
-import { TodoInput } from './src/components/TodoInput';
-import { THEME } from './src/theme/colors';
-import { useTodos } from './src/hooks/useTodos';
+import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import ToDoScreen from './src/screens/toDoScreen';
+import { store } from './src/store';
 
+//* Redux
+//npm install @reduxjs/toolkit
+//npm install react-redux
 
 export default function App() {
-
-  const {
-    inputVal,
-    canAdd,
-    setInputVal,
-    todos, 
-    handelAddTodo,
-    handleCompleteTodo,
-    handleUpdateButton,
-    handleDeleteTodo,
-  } = useTodos()
-
-
   return (
-    
-      <View style={styles.container}>
-        <Text style={styles.tittle}>To do List</Text>
-        <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
-          <TodoInput 
-            value={inputVal}
-            onChangeText={(value) => setInputVal(value)}
-            />
-          <ButtonP text={canAdd?'Add Task ': 'Edit Task '} light 
-              onPress={handelAddTodo} 
-              color={canAdd?THEME.COLORS.GREEN.POSITIVE:THEME.COLORS.ORANGE.WARNING} 
-              iconName={canAdd?'plus-circle':'edit'}/>
-        </View>
-        <FlatList 
-          data={todos}
-          keyExtractor={(item) => item.id}
-          renderItem={(( {item: {id, name, isCompleted, isUpdating, updated, created} } ) => 
-          <Todo nombre={name} id={id} updated={updated} created={created}
-          handleDelete={handleDeleteTodo} handleComplete={handleCompleteTodo} handleUpdate={handleUpdateButton}
-          isComplete={isCompleted} isUpdating={isUpdating}
-          />)}
-        />
-        <StatusBar style="auto" />
-      </View>
-    
+    <Provider store={store}>
+      <ToDoScreen/>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 10,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: THEME.COLORS.BLUE.BACKGROUND,
-  },
-  tittle:{
-    fontSize: 40, 
-    fontWeight: 'bold',
-    textAlign:'center', 
-    color:'white',
-    margin: 20,
   },
 });
